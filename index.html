@@ -4,88 +4,21 @@
   <meta charset="utf-8">
   <title>Service NSW</title>
 
-  <!-- Fullscreen with safe areas on iOS -->
+  <!-- iPhone fullscreen basics -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="ProtoPie App">
+  <meta name="apple-mobile-web-app-title" content="My App">
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      -webkit-tap-highlight-color: transparent;
-      overscroll-behavior: none;
-    }
-
-    /* Safe area container */
-    .app {
-      position: fixed;
-      top: env(safe-area-inset-top);
-      right: env(safe-area-inset-right);
-      bottom: env(safe-area-inset-bottom);
-      left: env(safe-area-inset-left);
-      background: #ffffff;
-      overflow: hidden; /* crop after scaling */
-    }
-
-    /* We set this to the prototype's native size, then scale it up */
-    #webview {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      border: 0;
-      background: #ffffff;
-      transform-origin: 0 0; /* scale from top left */
-      /* width and height are set by JS to your prototype size */
-    }
-  </style>
+  <!-- Use your repo icon as the Home Screen icon -->
+  <link rel="apple-touch-icon" href="icon.png">
 </head>
-<body>
-  <div class="app">
-    <iframe
-      id="webview"
-      src="https://cloud.protopie.io/p/058f0379ed48d032d953d586?ui=true&scaleToFit=true&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&bgImage=undefined&playSpeed=1"
-      allow="fullscreen; clipboard-read; clipboard-write">
-    </iframe>
-  </div>
-
-  <script>
-    // Set these to your ProtoPie design size in CSS pixels
-    const PROTOTYPE_WIDTH = 390;   // iPhone 12/13/14 width
-    const PROTOTYPE_HEIGHT = 844;  // iPhone 12/13/14 height
-
-    const iframe = document.getElementById('webview');
-
-    function layout() {
-      const availW = window.innerWidth;
-      const availH = window.innerHeight;
-
-      // Scale to COVER the screen (no side gaps)
-      const scale = Math.max(availW / PROTOTYPE_WIDTH, availH / PROTOTYPE_HEIGHT);
-
-      // Set iframe to native size and scale it
-      iframe.style.width = PROTOTYPE_WIDTH + 'px';
-      iframe.style.height = PROTOTYPE_HEIGHT + 'px';
-      iframe.style.transform = `scale(${scale})`;
-
-      // Center after scaling
-      const scaledW = PROTOTYPE_WIDTH * scale;
-      const scaledH = PROTOTYPE_HEIGHT * scale;
-      const offsetX = (availW - scaledW) / 2;
-      const offsetY = (availH - scaledH) / 2;
-      iframe.style.left = offsetX + 'px';
-      iframe.style.top = offsetY + 'px';
-    }
-
-    // Handle orientation and bars collapsing on iOS
-    window.addEventListener('resize', layout);
-    window.addEventListener('orientationchange', layout);
-    window.addEventListener('load', layout);
-  </script>
+<body style="margin:0;background:#ffffff;overflow:hidden;">
+  <iframe
+    src="https://cloud.protopie.io/p/058f0379ed48d032d953d586?ui=true&scaleToFit=true&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&bgImage=undefined&playSpeed=1"
+    style="position:fixed;inset:0;border:0;width:100%;height:100%;background:#ffffff"
+    allow="fullscreen">
+  </iframe>
 </body>
 </html>
