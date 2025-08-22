@@ -17,7 +17,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #ffffff;
+      background: #ffffff; /* match your prototype bg */
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -32,7 +32,7 @@
       background: #ffffff;
     }
 
-    /* Scaled to cover */
+    /* We scale this to COVER the screen */
     #webview {
       position: absolute;
       top: 50%;
@@ -53,24 +53,23 @@
   </div>
 
   <script>
-    // Prototype designed for iPhone 13 mini
-    const PROTOTYPE_WIDTH = 375;
-    const PROTOTYPE_HEIGHT = 812;
+    // Set to your ProtoPie design size
+    const PROTOTYPE_WIDTH = 390;
+    const PROTOTYPE_HEIGHT = 844;
 
     const iframe = document.getElementById('webview');
 
     function viewportSize() {
+      // visualViewport handles iOS toolbars better
       const vv = window.visualViewport;
-      return {
-        w: vv ? vv.width : window.innerWidth,
-        h: vv ? vv.height : window.innerHeight
-      };
+      return { w: vv ? vv.width : window.innerWidth,
+               h: vv ? vv.height : window.innerHeight };
     }
 
     function layout() {
       const { w, h } = viewportSize();
 
-      // Scale to COVER the screen. Extra 1% to hide any 1px gaps.
+      // Scale to COVER. Add a tiny epsilon to avoid 1px gaps.
       const scale = Math.max(w / PROTOTYPE_WIDTH, h / PROTOTYPE_HEIGHT) * 1.01;
 
       iframe.style.width = PROTOTYPE_WIDTH + 'px';
