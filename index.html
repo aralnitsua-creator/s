@@ -2,58 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Service NSW</title>
+  <title>ProtoPie App</title>
 
-  <!-- iOS fullscreen setup -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="s">
-
-  <!-- App icon -->
-  <link rel="apple-touch-icon" href="icon.png">
 
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       width: 100%;
-      background: #000;
+      height: 100%;
+      overflow: hidden;
+      background: #000; /* avoid gaps showing white */
+    }
+
+    .wrapper {
+      position: fixed;
+      inset: 0;
       overflow: hidden;
     }
 
-    /* Background image fills screen, zooms in if needed */
-    img.fullscreen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* zoom/crop so no gaps */
-      z-index: 0;
-    }
-
-    /* ProtoPie iframe on top */
     iframe {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 50%;
+      left: 50%;
       border: none;
-      z-index: 1;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin: center center;
     }
   </style>
 </head>
 <body>
-  <!-- Replace "myimage.png" with your uploaded image filename -->
-  <img src="myimage.png" alt="Background" class="fullscreen">
+  <div class="wrapper">
+    <iframe 
+      id="webview"
+      src="https://cloud.protopie.io/p/68bab41c6f2176888d4c9d67?ui=false&scaleToFit=true&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&bgImage=undefined&playSpeed=1"
+      allow="fullscreen">
+    </iframe>
+  </div>
 
-  <iframe 
-    src="https://cloud.protopie.io/p/68bab41c6f2176888d4c9d67?ui=false&scaleToFit=true&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&bgImage=undefined&playSpeed=1"
-    allow="fullscreen; clipboard-read; clipboard-write">
-  </iframe>
+  <script>
+    const PROTOTYPE_WIDTH = 390;  // your ProtoPie design width
+    const PROTOTYPE_HEIGHT = 844; // your ProtoPie design height
+
+    const iframe = document.getElementById('webview');
+
+    function resize() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      // scale big enough to cover screen fully
+      const scale = Math.max(w / PROTOTYPE_WIDTH, h / PROTOTYPE_HEIGHT);
+
+      iframe.style.width = PROTOTYPE_WIDTH + 'px';
+      iframe.style.height = PROTOTYPE_HEIGHT + 'px';
+      iframe.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    }
+
+    window.addEventListener('resize', resize);
+    window.addEventListener('orientationchange', resize);
+    window.addEventListener('load', resize);
+  </script>
 </body>
 </html>
