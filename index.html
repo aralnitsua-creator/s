@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <title>ProtoPie App</title>
 
-  <!-- Fullscreen and safe areas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,69 +16,23 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #ffffff; /* match your prototype bg */
-      -webkit-tap-highlight-color: transparent;
+      background: #ffffff; /* match your prototype background */
     }
 
-    /* Fill the safe area completely */
-    .wrapper {
+    iframe {
       position: fixed;
-      top: env(safe-area-inset-top);
-      right: env(safe-area-inset-right);
-      bottom: env(safe-area-inset-bottom);
-      left: env(safe-area-inset-left);
-      overflow: hidden;
-      background: #ffffff;
-    }
-
-    /* We scale this to COVER the screen */
-    #webview {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      border: 0;
-      transform-origin: center center;
-      background: #ffffff;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <iframe
-      id="webview"
-      src="https://cloud.protopie.io/p/058f0379ed48d032d953d586?ui=false&scaleToFit=true&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&bgImage=undefined&playSpeed=1"
-      allow="fullscreen">
-    </iframe>
-  </div>
-
-  <script>
-    // Set to your ProtoPie design size
-    const PROTOTYPE_WIDTH = 390;
-    const PROTOTYPE_HEIGHT = 844;
-
-    const iframe = document.getElementById('webview');
-
-    function viewportSize() {
-      // visualViewport handles iOS toolbars better
-      const vv = window.visualViewport;
-      return { w: vv ? vv.width : window.innerWidth,
-               h: vv ? vv.height : window.innerHeight };
-    }
-
-    function layout() {
-      const { w, h } = viewportSize();
-
-      // Scale to COVER. Add a tiny epsilon to avoid 1px gaps.
-      const scale = Math.max(w / PROTOTYPE_WIDTH, h / PROTOTYPE_HEIGHT) * 1.01;
-
-      iframe.style.width = PROTOTYPE_WIDTH + 'px';
-      iframe.style.height = PROTOTYPE_HEIGHT + 'px';
-      iframe.style.transform = `translate(-50%, -50%) scale(${scale})`;
-    }
-
-    window.addEventListener('resize', () => { layout(); setTimeout(layout, 50); });
-    window.addEventListener('orientationchange', () => { setTimeout(layout, 150); });
-    window.addEventListener('load', layout);
-  </script>
+  <iframe 
+    src="https://cloud.protopie.io/p/058f0379ed48d032d953d586?ui=true&scaleToFit=true&enableHotspotHints=false&cursorType=touch&mockup=false&bgColor=%23F5F5F5&bgImage=undefined&playSpeed=1" 
+    allow="fullscreen">
+  </iframe>
 </body>
 </html>
